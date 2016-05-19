@@ -1,4 +1,4 @@
-# 2048-hacker
+# 2048-lab
 An automatic 2048 for learning C, non-manual yet.
 
 ## Description
