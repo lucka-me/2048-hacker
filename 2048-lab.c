@@ -118,6 +118,7 @@ void getNewTile (int Field[LEN_FIELD][LEN_FIELD]) {
 int Down (int Field[LEN_FIELD][LEN_FIELD]) {
     int isMoved = 0;
     int Score = 0;
+    int isMerged[LEN_FIELD][LEN_FIELD] = {0};
     for (int x = LEN_FIELD - 1; x >= 0; x--) {
         for (int y = 0; y < LEN_FIELD; y++) {
             if (!Field[x][y]) continue;
@@ -133,9 +134,10 @@ int Down (int Field[LEN_FIELD][LEN_FIELD]) {
                 isMoved = 1;
             }
             // 合并
-            if (MoveX + 1 < LEN_FIELD && Field[MoveX + 1][y] == Field[MoveX][y]) {
+            if (MoveX + 1 < LEN_FIELD && Field[MoveX + 1][y] == Field[MoveX][y] && !isMerged[MoveX + 1][y]) {
                 Field[MoveX + 1][y] *= 2;
                 Field[MoveX][y] = 0;
+                isMerged[MoveX + 1][y] = 1;
                 Score += Field[MoveX + 1][y];
             }
         }
@@ -151,6 +153,7 @@ int Down (int Field[LEN_FIELD][LEN_FIELD]) {
 int Right (int Field[LEN_FIELD][LEN_FIELD]) {
     int isMoved = 0;
     int Score = 0;
+    int isMerged[LEN_FIELD][LEN_FIELD] = {0};
     for (int y = LEN_FIELD - 1; y >= 0; y--) {
         for (int x = 0; x < LEN_FIELD; x++) {
             if (!Field[x][y]) continue;
@@ -166,9 +169,10 @@ int Right (int Field[LEN_FIELD][LEN_FIELD]) {
                 isMoved = 1;
             }
             // 合并
-            if (MoveY + 1 < LEN_FIELD && Field[x][MoveY + 1] == Field[x][MoveY]) {
+            if (MoveY + 1 < LEN_FIELD && Field[x][MoveY + 1] == Field[x][MoveY] && !isMerged[x][MoveY + 1]) {
                 Field[x][MoveY + 1] *= 2;
                 Field[x][MoveY] = 0;
+                isMerged[x][MoveY + 1] = 1;
                 Score += Field[x][MoveY + 1];
             }
         }
@@ -184,6 +188,7 @@ int Right (int Field[LEN_FIELD][LEN_FIELD]) {
 int Left (int Field[LEN_FIELD][LEN_FIELD]) {
     int isMoved = 0;
     int Score = 0;
+    int isMerged[LEN_FIELD][LEN_FIELD] = {0};
     for (int y = 1; y < LEN_FIELD; y++) {
         for (int x = 0; x < LEN_FIELD; x++) {
             if (!Field[x][y]) continue;
@@ -199,10 +204,10 @@ int Left (int Field[LEN_FIELD][LEN_FIELD]) {
                 isMoved = 1;
             }
             // 合并
-            if (MoveY - 1 >= 0 && Field[x][MoveY - 1] == Field[x][MoveY]) {
+            if (MoveY - 1 >= 0 && Field[x][MoveY - 1] == Field[x][MoveY] && !isMerged[x][MoveY - 1]) {
                 Field[x][MoveY - 1] *= 2;
                 Field[x][MoveY] = 0;
-                isMoved++;
+                isMerged[x][MoveY - 1] = 1;
                 Score += Field[x][MoveY - 1];
             }
         }
@@ -218,6 +223,7 @@ int Left (int Field[LEN_FIELD][LEN_FIELD]) {
 int Up (int Field[LEN_FIELD][LEN_FIELD]) {
     int isMoved = 0;
     int Score = 0;
+    int isMerged[LEN_FIELD][LEN_FIELD] = {0};
     for (int x = 1; x < LEN_FIELD; x++) {
         for (int y = 0; y < LEN_FIELD; y++) {
             if (!Field[x][y]) continue;
@@ -233,9 +239,10 @@ int Up (int Field[LEN_FIELD][LEN_FIELD]) {
                 isMoved = 1;
             }
             // 合并
-            if (MoveX - 1 >= 0 && Field[MoveX - 1][y] == Field[MoveX][y]) {
+            if (MoveX - 1 >= 0 && Field[MoveX - 1][y] == Field[MoveX][y] && !isMerged[MoveX - 1][y]) {
                 Field[MoveX - 1][y] *= 2;
                 Field[MoveX][y] = 0;
+                isMerged[MoveX - 1][y] = 1;
                 Score += Field[MoveX - 1][y];
             }
         }
