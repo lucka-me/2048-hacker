@@ -26,25 +26,24 @@ void PrintField(int Field[LEN_FIELD][LEN_FIELD]);
 int main(int argc, const char * argv[]) {
     // 初始化随机数种子
     srand((unsigned int)time(NULL));
-    
+
     int Field[LEN_FIELD][LEN_FIELD] = {0};
-    
+
     printf("> Start:\n");
     getNewTile(Field);
     getNewTile(Field);
     PrintField(Field);
-    
+
     // 开始解
     int Score = 0;
     int DownScore, RightScore, LeftScore, UpScore;
     do {
-        getNewTile(Field);
-        
+
         DownScore = 0;
         RightScore = 0;
         LeftScore = 0;
         UpScore = 0;
-        
+
         DownScore = Down(Field);
         if (!DownScore) {
             RightScore = Right(Field);
@@ -55,20 +54,22 @@ int main(int argc, const char * argv[]) {
                 }
             }
         }
-        
+
         DownScore = DownScore == 1 ? 0 : DownScore;
         RightScore = RightScore == 1 ? 0 : RightScore;
         LeftScore = LeftScore == 1 ? 0 : LeftScore;
         UpScore = UpScore == 1 ? 0 : UpScore;
-        
+
         Score += (DownScore + RightScore + LeftScore + UpScore);
+
+        getNewTile(Field);
     } while (!isLost(Field) && !isWin(Field));
-    
+
     // 输出结果
     printf("> Result:\n");
     PrintField(Field);
     if (isWin(Field)) {
-        printf("> You won.\n");
+        printf("> You win.\n");
     } else {
         printf("> Game over.\n");
     }
@@ -80,7 +81,7 @@ int main(int argc, const char * argv[]) {
 void getNewTile (int Field[LEN_FIELD][LEN_FIELD]) {
     int x = 0;
     int y = 0;
-    
+
     // 获取随机位置
     int cntBlank = 0;
     for (int scan_x = 0; scan_x < LEN_FIELD; scan_x++) {
@@ -90,10 +91,10 @@ void getNewTile (int Field[LEN_FIELD][LEN_FIELD]) {
             }
         }
     }
-    
+
     // 获取随机位置的序号
     int index = getRandom() * cntBlank;
-    
+
     // 找到随机位置的坐标
     int isPositionFound = 0;
     for (int scan_x = 0; scan_x < LEN_FIELD; scan_x++) {
@@ -109,7 +110,7 @@ void getNewTile (int Field[LEN_FIELD][LEN_FIELD]) {
         }
         if (isPositionFound) break;
     }
-    
+
     // 加入随机数
     Field[x][y] = getRandom() < 0.9 ? 2 : 4;
 }
@@ -122,7 +123,7 @@ int Down (int Field[LEN_FIELD][LEN_FIELD]) {
     for (int x = LEN_FIELD - 1; x >= 0; x--) {
         for (int y = 0; y < LEN_FIELD; y++) {
             if (!Field[x][y]) continue;
-            
+
             int MoveX = x;
             // 移动
             while (MoveX + 1 < LEN_FIELD && !Field[MoveX + 1][y]) {
@@ -157,7 +158,7 @@ int Right (int Field[LEN_FIELD][LEN_FIELD]) {
     for (int y = LEN_FIELD - 1; y >= 0; y--) {
         for (int x = 0; x < LEN_FIELD; x++) {
             if (!Field[x][y]) continue;
-            
+
             int MoveY = y;
             // 移动
             while (MoveY + 1 < LEN_FIELD && !Field[x][MoveY + 1]) {
@@ -192,7 +193,7 @@ int Left (int Field[LEN_FIELD][LEN_FIELD]) {
     for (int y = 1; y < LEN_FIELD; y++) {
         for (int x = 0; x < LEN_FIELD; x++) {
             if (!Field[x][y]) continue;
-            
+
             int MoveY = y;
             // 移动
             while (MoveY - 1 >= 0 && !Field[x][MoveY - 1]) {
@@ -227,7 +228,7 @@ int Up (int Field[LEN_FIELD][LEN_FIELD]) {
     for (int x = 1; x < LEN_FIELD; x++) {
         for (int y = 0; y < LEN_FIELD; y++) {
             if (!Field[x][y]) continue;
-            
+
             int MoveX = x;
             // 移动
             while (MoveX - 1 >= 0 && !Field[MoveX - 1][y]) {
@@ -268,7 +269,7 @@ int isLost (int Field[LEN_FIELD][LEN_FIELD]) {
     if (cntBlank > 0) {
         return 0;
     }
-    
+
     // 当填满时检查周围是否有相同的方块
     int x, y;
     // 检查第二行的上、下、右
@@ -287,7 +288,7 @@ int isLost (int Field[LEN_FIELD][LEN_FIELD]) {
         if (Field[x][y] == Field[x][y + 1]) return 0;
     }
     if (Field[x][y] == Field[x + 1][y]) return 0;
-    
+
     return 1;
 }
 
@@ -298,7 +299,7 @@ int isWin (int Field[LEN_FIELD][LEN_FIELD]) {
             if (Field[x][y] == 2048) return 1;
         }
     }
-    
+
     return 0;
 }
 
