@@ -93,7 +93,7 @@ void getNewTile (int Field[LEN_FIELD][LEN_FIELD]) {
     }
 
     // 获取随机位置的序号
-    int index = getRandom() * cntBlank;
+    int index = getRandom() * cntBlank + 1;
 
     // 找到随机位置的坐标
     int isPositionFound = 0;
@@ -303,7 +303,7 @@ int isWin (int Field[LEN_FIELD][LEN_FIELD]) {
     return 0;
 }
 
-// 获取 0~1 之间的随机数
+// 获取 0~1 之间的随机数，不包括 1
 double getRandom(void) {
     return rand() / (double)RAND_MAX;
 }
