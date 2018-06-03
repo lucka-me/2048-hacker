@@ -8,10 +8,10 @@ An automatic 2048 for learning C, non-manual yet.
 
 ## Supported Features
 
-   | 功能
----|---
-✓  | 模仿[原版2048](https://github.com/gabrielecirulli/2048)的新数字生成方式
-✓  | 初步的移动、合并操作
-✓  | 计分系统
+|     | Feature
+| --- | :---
+| ✓   | 模仿[原版2048](https://github.com/gabrielecirulli/2048)的新数字生成方式
+| ✓   | 初步的移动、合并操作
+| ✓   | 计分系统
 
 目前只有一个框架，解2048的方法还在探究，先拿一个简单的方法来凑数了……
